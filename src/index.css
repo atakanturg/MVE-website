@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-mve-green: #4CAF7D;
+  --color-mve-navy: #1a2e45;
+
+  --color-background: transparent;
+  --color-background-secondary: transparent;
+  --color-foreground: #475569;
+  --color-heading: #334155;
+  --color-primary: #4CAF7D;
+  --color-primary-foreground: #FFFFFF;
+  --color-primary-hover: #3d9a6a;
+  --color-card: transparent;
+  --color-muted-foreground: #7A92A8;
+  --color-border: transparent;
+  --radius-border: 0rem;
+  --radius-md: 0rem;
+  --radius-lg: 0rem;
+  --radius-xl: 0rem;
+  --radius-2xl: 0rem;
+  --radius-3xl: 0rem;
+  --radius-full: 9999px;
+  --radius-sm: 0rem;
+
+  --font-sans: "Calibri", "Carlito", sans-serif;
+  --font-heading: "Calibri", "Carlito", sans-serif;
+  --font-serif: "Calibri", "Carlito", sans-serif;
+}
+
+@layer base {
+  :root {
+    --mve-green: #4CAF7D;
+    --mve-navy: #1a2e45;
+
+    --background: transparent;
+    --background-secondary: transparent;
+    --foreground: #475569;
+    --heading: #334155;
+    --primary: #4CAF7D;
+    --primary-foreground: #FFFFFF;
+    --primary-hover: #3d9a6a;
+    --card: transparent;
+    --muted-foreground: #7A92A8;
+    --border: transparent;
+    --border-radius: 0rem;
+
+    color-scheme: light;
+  }
+
+  html, body {
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--heading);
+  }
+}

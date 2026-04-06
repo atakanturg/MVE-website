@@ -1,0 +1,92 @@
+import { Route, Switch, useLocation } from "wouter";
+import { Navbar } from "./components/Navbar";
+import { Footer } from "./components/Footer";
+import { useEffect, useRef } from "react";
+
+// Pages
+import { WebGLScene } from "./components/webgl/Scene";
+import { Home } from "./pages/Home";
+import { InvestmentSummit } from "./pages/InvestmentSummit";
+import { InvestmentSummitDetails } from "./pages/InvestmentSummitDetails";
+import { Sfere } from "./pages/Sfere";
+import { Reason } from "./pages/Reason";
+import { InvestmentChallenge } from "./pages/InvestmentChallenge";
+import { Competitions } from "./pages/Competitions";
+import { Contact } from "./pages/Contact";
+import { SfereKeynotes } from "./pages/SfereKeynotes";
+import { SfereRecentKeynotes } from "./pages/SfereRecentKeynotes";
+import { HiddenContact } from "./pages/HiddenContact";
+import { NotFound } from "./pages/NotFound";
+// Triggering TS reload
+
+function ScrollToTop() {
+  const [location] = useLocation();
+  const prevLocation = useRef(location);
+
+  useEffect(() => {
+    if (prevLocation.current === location) return;
+    prevLocation.current = location;
+
+    if (window.location.hash) {
+      const element = document.getElementById(window.location.hash.substring(1));
+      if (element) {
+        setTimeout(() => element.scrollIntoView({ behavior: "smooth" }), 100);
+      }
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [location]);
+
+  return null;
+}
+
+function App() {
+  const [location, setLocation] = useLocation();
+  const isHome = location === "/";
+
+  useEffect(() => {
+    const handleNavigate = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      if (customEvent.detail) setLocation(customEvent.detail);
+    };
+    window.addEventListener('mve-navigate', handleNavigate);
+    return () => window.removeEventListener('mve-navigate', handleNavigate);
+  }, [setLocation]);
+
+  return (
+    <div className="flex flex-col min-h-screen font-sans selection:bg-[#4CAF7D]/30 selection:text-heading relative bg-transparent selection:z-50">
+      {/* The background canvas handles WebGL rendering. It is now explicitly Z:0 to sit BEHIND text. */}
+      <div className="fixed inset-0 z-0">
+        <WebGLScene isHome={isHome} />
+      </div>
+      
+      <div className="relative z-50">
+        <Navbar />
+      </div>
+      <ScrollToTop />
+
+      <div className="grow flex flex-col relative z-20 pointer-events-none">
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/investment-summit" component={InvestmentSummit} />
+          <Route path="/investment-summit/details" component={InvestmentSummitDetails} />
+          <Route path="/sfere" component={Sfere} />
+          <Route path="/reason" component={Reason} />
+          <Route path="/investment-challenge" component={InvestmentChallenge} />
+          <Route path="/competitions" component={Competitions} />
+          <Route path="/contact" component={Contact} />
+          <Route path="/contact/keynotes/:id">{(params) => <HiddenContact params={params} />}</Route>
+          <Route path="/sfere/keynotes/:year" component={SfereKeynotes} />
+          <Route path="/sfere/recent-keynotes" component={SfereRecentKeynotes} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+
+      <div>
+        {!isHome && <Footer />}
+      </div>
+    </div>
+  );
+}
+
+export default App;
