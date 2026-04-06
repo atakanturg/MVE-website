@@ -82,7 +82,7 @@ function ScrollRig() {
   const programSize = Math.min(vWidth * 0.04, 0.36); // Program links
   
   // Adaptive horizontal tracking
-  const sideMargin = Math.min(vWidth * 0.2, 2.4);
+  const sideMargin = Math.min(vWidth * 0.25, 2.8);
 
   return (
     <group ref={groupRef}>
@@ -125,7 +125,7 @@ function ScrollRig() {
         fontSize={page2HeadingSize} 
         color="#334155" 
         textAlign="left"
-        maxWidth={vWidth * 0.45}
+        maxWidth={vWidth * 0.35}
         noHitbox={true}
       />
       <FluidText 
@@ -134,7 +134,7 @@ function ScrollRig() {
         fontSize={page2HeadingSize} 
         color="#4CAF7D" 
         textAlign="right"
-        maxWidth={vWidth * 0.45}
+        maxWidth={vWidth * 0.35}
         noHitbox={true}
       />
       <FluidText 
