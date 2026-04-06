@@ -75,14 +75,14 @@ function ScrollRig() {
     groupRef.current.rotation.y = scroll * Math.PI * 0.05;
   });
 
-  // Responsive scaling constants - Significantly reduced to be 'normal' and mobile-safe
-  const titleSize = Math.min(vWidth * 0.2, 2.2); // Hero MVE (was 0.35/3.2)
-  const subtitleSize = Math.min(vWidth * 0.015, 0.16); // Miami Venturing Entrepreneurs (was 0.025/0.22)
-  const page2HeadingSize = Math.min(vWidth * 0.09, 0.85); // Page 2 Headings (was 0.12/1.1)
-  const programSize = Math.min(vWidth * 0.045, 0.42); // Program links
+  // Responsive scaling constants - clamped tightly so text never overflows on any screen size
+  const titleSize = Math.min(vWidth * 0.16, 1.8); // Hero MVE - reduced to prevent overflow
+  const subtitleSize = Math.min(vWidth * 0.013, 0.13); // Miami Venturing Entrepreneurs - smaller for safety
+  const page2HeadingSize = Math.min(vWidth * 0.07, 0.68); // Page 2 Headings - reduced max significantly
+  const programSize = Math.min(vWidth * 0.04, 0.36); // Program links
   
   // Adaptive horizontal tracking
-  const sideMargin = Math.min(vWidth * 0.22, 2.8);
+  const sideMargin = Math.min(vWidth * 0.2, 2.4);
 
   return (
     <group ref={groupRef}>

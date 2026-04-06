@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -71,3 +72,7 @@ export default defineConfig([
   },
 ])
 ```
+=======
+# MVE-website
+This is the repository that houses the code for the prototype of the MVE clubs website.
+>>>>>>> eab064a280f402ce4fb514f8f2fe1e7e5f233ce6

@@ -39,15 +39,13 @@ export function SfereRecentKeynotes() {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, scale: 0.95, y: 40, filter: "blur(4px)" },
+    hidden: { opacity: 0, y: 24 },
     visible: (idx: number) => ({
       opacity: 1,
-      scale: 1,
       y: 0,
-      filter: "blur(0px)",
       transition: {
-        delay: 0.1 + idx * 0.15,
-        duration: 0.8,
+        delay: 0.1 + idx * 0.1,
+        duration: 0.55,
         ease: [0.16, 1, 0.3, 1] as [number, number, number, number]
       }
     })

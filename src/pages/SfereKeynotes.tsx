@@ -90,32 +90,22 @@ export function SfereKeynotes() {
   // Use parsed year if it exists in our data map, otherwise default to 2026.
   const activeYear = year && yearData[year] ? year : "2026";
   const data = yearData[activeYear];
-  const numSpeakers = data.speakers.length;
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1 }  // Individual delays trigger organically inside container
+    visible: { opacity: 1, transition: { staggerChildren: 0.12 } }
   };
 
   const itemVariants = {
-    hidden: { 
-      opacity: 0, 
-      scale: 2, 
-      y: -500,
-      filter: "blur(5px)"
-    },
-    visible: (reverseIndex: number) => ({
-      opacity: [0, 1, 1],
-      scale: [2, 1.05, 1],
-      y: [-500, -30, 0],
-      filter: ["blur(5px)", "blur(0px)", "blur(0px)"],
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+      opacity: 1,
+      y: 0,
       transition: {
-        delay: 1 + reverseIndex * 0.4,
-        duration: 2.2,
-        times: [0, 0.4, 1],
-        ease: ["easeOut", "easeInOut"] as any
+        duration: 0.6,
+        ease: [0.16, 1, 0.3, 1] as [number, number, number, number]
       }
-    })
+    }
   };
 
   return (
@@ -155,12 +145,10 @@ export function SfereKeynotes() {
             animate="visible"
             className="flex flex-wrap justify-center gap-12 lg:gap-16 w-full mb-32 z-10"
           >
-            {data.speakers.map((speaker, idx) => {
-              const reverseIndex = numSpeakers - 1 - idx;
+            {data.speakers.map((speaker) => {
               return (
                 <motion.div 
                   key={speaker.name} 
-                  custom={reverseIndex}
                   variants={itemVariants} 
                   className="flex flex-col gap-6 items-center group w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2.5rem)] max-w-[320px]"
                 >
