@@ -80,7 +80,7 @@ export function HiddenContact({ params }: { params: { id: string } }) {
   };
 
   return (
-    <div className="flex flex-col min-h-screen tracking-wide bg-transparent relative pt-4 md:pt-8 w-full">
+    <div className="flex flex-col min-h-screen tracking-wide bg-transparent relative pt-4 md:pt-8 w-full pointer-events-auto">
       {/* Back Link to Specific Location */}
       <motion.div
         initial={{ opacity: 0, x: -12 }}

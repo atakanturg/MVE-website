@@ -1,7 +1,9 @@
 import { Route, Switch, useLocation } from "wouter";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Preloader } from "./components/Preloader";
 
 // Pages
 import { WebGLScene } from "./components/webgl/Scene";
@@ -17,7 +19,6 @@ import { SfereKeynotes } from "./pages/SfereKeynotes";
 import { SfereRecentKeynotes } from "./pages/SfereRecentKeynotes";
 import { HiddenContact } from "./pages/HiddenContact";
 import { NotFound } from "./pages/NotFound";
-// Triggering TS reload
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -42,6 +43,7 @@ function ScrollToTop() {
 
 function App() {
   const [location, setLocation] = useLocation();
+  const [loading, setLoading] = useState(true);
   const isHome = location === "/";
 
   useEffect(() => {
@@ -54,37 +56,58 @@ function App() {
   }, [setLocation]);
 
   return (
-    <div className="flex flex-col min-h-screen font-sans selection:bg-[#4CAF7D]/30 selection:text-heading relative bg-transparent selection:z-50">
-      {/* The background canvas handles WebGL rendering. It is now explicitly Z:0 to sit BEHIND text. */}
-      <div className="fixed inset-0 z-0">
-        <WebGLScene isHome={isHome} />
-      </div>
-      
-      <div className="relative z-50">
-        <Navbar />
-      </div>
+    <div className="flex flex-col min-h-screen font-sans selection:bg-[#4CAF7D]/30 selection:text-heading relative bg-transparent selection:z-50 overflow-x-hidden">
+      <AnimatePresence mode="wait">
+        {loading && (
+          <Preloader onComplete={() => setLoading(false)} key="preloader" />
+        )}
+      </AnimatePresence>
+
       <ScrollToTop />
 
-      <div className="grow flex flex-col relative z-20 pointer-events-none">
-        <Switch>
-          <Route path="/" component={Home} />
-          <Route path="/investment-summit" component={InvestmentSummit} />
-          <Route path="/investment-summit/details" component={InvestmentSummitDetails} />
-          <Route path="/sfere" component={Sfere} />
-          <Route path="/reason" component={Reason} />
-          <Route path="/investment-challenge" component={InvestmentChallenge} />
-          <Route path="/competitions" component={Competitions} />
-          <Route path="/contact" component={Contact} />
-          <Route path="/contact/keynotes/:id">{(params) => <HiddenContact params={params} />}</Route>
-          <Route path="/sfere/keynotes/:year" component={SfereKeynotes} />
-          <Route path="/sfere/recent-keynotes" component={SfereRecentKeynotes} />
-          <Route component={NotFound} />
-        </Switch>
-      </div>
+      {/* Background WebGL Scene: Visible only after load */}
+      <motion.div 
+        className="fixed inset-0 z-0"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: loading ? 0 : 1 }}
+        transition={{ duration: 1.5, ease: "easeInOut" }}
+      >
+        <WebGLScene isHome={isHome} />
+      </motion.div>
+      
+      {!loading && (
+        <motion.div 
+          className="flex flex-col min-h-screen relative z-10 pointer-events-none"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className="relative z-50 pointer-events-auto">
+            <Navbar />
+          </div>
 
-      <div>
-        {!isHome && <Footer />}
-      </div>
+          <div className="grow flex flex-col relative z-20 pointer-events-none">
+            <Switch>
+              <Route path="/" component={Home} />
+              <Route path="/investment-summit" component={InvestmentSummit} />
+              <Route path="/investment-summit/details" component={InvestmentSummitDetails} />
+              <Route path="/sfere" component={Sfere} />
+              <Route path="/reason" component={Reason} />
+              <Route path="/investment-challenge" component={InvestmentChallenge} />
+              <Route path="/competitions" component={Competitions} />
+              <Route path="/contact" component={Contact} />
+              <Route path="/contact/keynotes/:id">{(params) => <HiddenContact params={params} />}</Route>
+              <Route path="/sfere/keynotes/:year" component={SfereKeynotes} />
+              <Route path="/sfere/recent-keynotes" component={SfereRecentKeynotes} />
+              <Route component={NotFound} />
+            </Switch>
+          </div>
+
+          <div className="relative z-30 pointer-events-auto">
+            {!isHome && <Footer />}
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 }

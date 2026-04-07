@@ -5,7 +5,7 @@ import * as THREE from 'three';
 
 interface FluidTextProps {
   text: string;
-  position?: [number, number, number];
+  position?: [number, number, number] | any;
   fontSize?: number;
   color?: string;
   isHoverable?: boolean;
@@ -13,6 +13,12 @@ interface FluidTextProps {
   onClick?: () => void;
   maxWidth?: number;
   textAlign?: 'left' | 'right' | 'center' | 'justify';
+  letterSpacing?: number;
+  outlineWidth?: number;
+  outlineColor?: string;
+  outlineBlur?: number;
+  emissive?: string;
+  emissiveIntensity?: number;
 }
 
 export function FluidText({
@@ -24,7 +30,13 @@ export function FluidText({
   noHitbox = false,
   onClick,
   maxWidth,
-  textAlign = 'center'
+  textAlign = 'center',
+  letterSpacing = 0,
+  outlineWidth = 0,
+  outlineColor = "transparent",
+  outlineBlur = 0,
+  emissive,
+  emissiveIntensity = 1,
 }: FluidTextProps) {
   const textRef = useRef<any>(null);
   const materialRef = useRef<THREE.MeshStandardMaterial>(null);
@@ -44,6 +56,10 @@ export function FluidText({
       fontSize={fontSize}
       maxWidth={maxWidth}
       textAlign={textAlign}
+      letterSpacing={letterSpacing}
+      outlineWidth={outlineWidth}
+      outlineColor={outlineColor}
+      outlineBlur={outlineBlur}
       anchorX="center"
       anchorY="middle"
       onPointerOver={() => {
@@ -65,6 +81,8 @@ export function FluidText({
         color={color} 
         roughness={0.2} 
         metalness={0.1} 
+        emissive={emissive || '#000000'}
+        emissiveIntensity={emissiveIntensity}
       />
     </Text>
   );

@@ -65,3 +65,35 @@
     color: var(--heading);
   }
 }
+
+/* Cinematic Utilities */
+.grain::after {
+  content: "";
+  position: fixed;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 99999;
+}
+
+@keyframes emerald-pulse {
+  0% { text-shadow: 0 0 10px rgba(76, 175, 125, 0.2); }
+  50% { text-shadow: 0 0 40px rgba(76, 175, 125, 0.6); }
+  100% { text-shadow: 0 0 10px rgba(76, 175, 125, 0.2); }
+}
+
+.animate-emerald-pulse {
+  animation: emerald-pulse 3s infinite ease-in-out;
+}
+
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+

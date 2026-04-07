@@ -3,7 +3,7 @@ import { Link } from "wouter";
 
 export function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center tracking-wide relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center tracking-wide relative overflow-hidden pointer-events-auto">
       <motion.h1 
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}

@@ -8,24 +8,28 @@ import * as THREE from 'three';
 
 function PlantStems() {
   const [location] = useLocation();
-  const count = 6; // Reduced count for supplementary look
+  const count = 12; // More stems for a lush growth
   
-  // Re-generate stems whenever we change pages for dynamic randomness
   const stems = useMemo(() => {
     const temp = [];
     for (let i = 0; i < count; i++) {
         const points = [];
-        const startX = (Math.random() - 0.5) * 70;
-        for (let j = 0; j < 6; j++) {
+        const startX = (Math.random() - 0.5) * 60;
+        const startZ = -10 + (Math.random() - 0.5) * 15;
+        for (let j = 0; j < 8; j++) {
             points.push(new THREE.Vector3(
-                startX + Math.sin(j * 0.5 + i) * 10,
-                (j - 3) * 18,
-                (Math.random() - 0.5) * 20
+                startX + Math.sin(j * 0.4 + i) * 8,
+                (j - 4) * 15,
+                startZ + Math.cos(j * 0.3 + i) * 5
             ));
         }
         const curve = new THREE.CatmullRomCurve3(points);
-        const geometry = new THREE.TubeGeometry(curve, 80, 0.12, 10, false);
-        temp.push({ geometry, speed: Math.random() * 0.03 + 0.01 });
+        const geometry = new THREE.TubeGeometry(curve, 100, 0.25, 12, false);
+        temp.push({ 
+            geometry, 
+            speed: Math.random() * 0.02 + 0.01,
+            phase: Math.random() * Math.PI * 2
+        });
     }
     return temp;
   }, [location]);
@@ -33,18 +37,35 @@ function PlantStems() {
   return (
     <group>
       {stems.map((stem, i) => (
-        <Float key={`${location}-${i}`} speed={stem.speed * 8} rotationIntensity={0.15} floatIntensity={0.3}>
+        <Float key={`${location}-${i}`} speed={stem.speed * 20} rotationIntensity={0.6} floatIntensity={1.5}>
           <mesh geometry={stem.geometry}>
-            <meshStandardMaterial 
-              color="#4CAF7D" 
+            <meshPhysicalMaterial 
+              color="#00FF88" 
+              emissive="#00FFCC"
+              emissiveIntensity={2.0}
               transparent 
-              opacity={0.1} // More subtle opacity
-              roughness={0.9}
-              metalness={0.05}
+              opacity={0.4}
+              roughness={0.1}
+              metalness={0.8}
+              transmission={0.5}
+              thickness={1.0}
             />
           </mesh>
         </Float>
       ))}
+      
+      {/* Adding glowing "dust" or spores near the stems */}
+      <points position={[0, 0, -5]}>
+          <sphereGeometry args={[40, 32, 32]} />
+          <pointsMaterial 
+            color="#00FFCC" 
+            size={0.05} 
+            transparent 
+            opacity={0.3} 
+            sizeAttenuation={true} 
+            blending={THREE.AdditiveBlending}
+          />
+      </points>
     </group>
   );
 }
@@ -96,15 +117,20 @@ function ScrollRig() {
         noHitbox={true}
       />
       <FluidText 
-        text="M V E" 
+        text="MVE" 
         position={[0, vPage * 0.02, 1]} 
         fontSize={titleSize} 
         color="#4CAF7D" 
+        letterSpacing={0.4}
+        outlineWidth={titleSize * 0.02}
+        outlineColor="#4CAF7D"
+        emissive="#4CAF7D"
+        emissiveIntensity={0.8}
         noHitbox={true}
       />
       <FluidText 
-        text="SCROLL TO EXPLORE ↓" 
-        position={[0, -vPage * 0.42, 1]} 
+        text="SCROLL TO EXPLORE V" 
+        position={[0, -vPage * 0.42, 2]} 
         fontSize={0.15} 
         color="#7A92A8" 
         noHitbox={true}
@@ -156,7 +182,7 @@ function ScrollRig() {
       />
       <FluidText 
         text="INVESTMENT SUMMIT  →" 
-        position={[-Math.min(vWidth * 0.15, 1.8), -vPage * 3.35, 0]} 
+        position={[-Math.min(vWidth * 0.15, 1.8), -vPage * 3.35, 2]} 
         fontSize={programSize} 
         color="#4CAF7D" 
         textAlign="left"
@@ -165,7 +191,7 @@ function ScrollRig() {
       />
       <FluidText 
         text="SFERE SYMPOSIUM  →" 
-        position={[Math.min(vWidth * 0.15, 1.8), -vPage * 3.65, 0]} 
+        position={[Math.min(vWidth * 0.15, 1.8), -vPage * 3.65, 2]} 
         fontSize={programSize} 
         color="#4CAF7D" 
         textAlign="right"
@@ -174,7 +200,7 @@ function ScrollRig() {
       />
       <FluidText 
         text="MVE REASON  →" 
-        position={[-Math.min(vWidth * 0.15, 1.8), -vPage * 3.95, -1]} 
+        position={[-Math.min(vWidth * 0.15, 1.8), -vPage * 3.95, 2]} 
         fontSize={programSize} 
         color="#4CAF7D" 
         textAlign="left"
@@ -183,7 +209,7 @@ function ScrollRig() {
       />
       <FluidText 
         text="MVE FUND  →" 
-        position={[0, -vPage * 4.4, 0]} 
+        position={[0, -vPage * 4.4, 2]} 
         fontSize={0.35} 
         color="#334155" 
         isHoverable={true}
@@ -191,7 +217,7 @@ function ScrollRig() {
       />
       <FluidText 
         text="COMPETITIONS  →" 
-        position={[0, -vPage * 4.6, 0]} 
+        position={[0, -vPage * 4.6, 2]} 
         fontSize={0.35} 
         color="#334155" 
         isHoverable={true}
@@ -199,7 +225,7 @@ function ScrollRig() {
       />
       <FluidText 
         text="CONTACT US  →" 
-        position={[0, -vPage * 4.8, 0]} 
+        position={[0, -vPage * 4.8, 2]} 
         fontSize={0.35} 
         color="#334155" 
         isHoverable={true}

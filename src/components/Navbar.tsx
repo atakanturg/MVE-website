@@ -51,7 +51,7 @@ export function Navbar() {
         {/* Logo */}
         <Link
           to="/"
-          className="text-primary font-extrabold text-2xl tracking-[0.2em] font-sans transition-colors duration-300"
+          className="text-primary font-extrabold text-2xl tracking-[0.2em] font-sans transition-colors duration-300 animate-emerald-pulse"
         >
           MVE
         </Link>

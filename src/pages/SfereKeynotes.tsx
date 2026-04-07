@@ -109,7 +109,7 @@ export function SfereKeynotes() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen tracking-wide bg-transparent relative pt-4 md:pt-8 w-full overflow-hidden">
+    <div className="flex flex-col min-h-screen tracking-wide bg-transparent relative pt-4 md:pt-8 w-full overflow-hidden pointer-events-auto">
       {/* Back Link */}
       <motion.div
         initial={{ opacity: 0, x: -12 }}

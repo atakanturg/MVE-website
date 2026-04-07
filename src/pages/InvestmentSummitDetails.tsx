@@ -15,7 +15,7 @@ export function InvestmentSummitDetails() {
   };
 
   return (
-    <div className="min-h-screen pt-28 pb-20 px-6 md:px-12 max-w-5xl mx-auto flex flex-col tracking-wide bg-transparent">
+    <div className="min-h-screen pt-28 pb-20 px-6 md:px-12 max-w-5xl mx-auto flex flex-col tracking-wide bg-transparent pointer-events-auto">
 
       {/* Back link */}
       <motion.div
