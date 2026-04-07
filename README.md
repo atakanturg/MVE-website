@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 
-This is the code for the prototype of the MVE clubs website created by Atakan Turgut. The draft website is live at draft-mve.vercel.app and is deployed using vercel.
+This is the code for the prototype of the MVE clubs website created by Atakan Turgut. The draft website is live at 
+[draft-mve.vercel.app](url) and is deployed using vercel.
 
 
 
