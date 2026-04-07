@@ -129,9 +129,9 @@ function ScrollRig() {
         noHitbox={true}
       />
       <FluidText 
-        text="SCROLL TO EXPLORE V" 
-        position={[0, -vPage * 0.42, 2]} 
-        fontSize={0.15} 
+        text="SCROLL TO EXPLORE" 
+        position={[0, -vPage * 0.22, 2]} 
+        fontSize={0.12} 
         color="#7A92A8" 
         noHitbox={true}
       />
@@ -251,8 +251,6 @@ export function WebGLScene({ isHome = true }: { isHome?: boolean }) {
     <div className="w-full h-full fixed inset-0 bg-transparent z-0 pointer-events-none">
       <Canvas 
         shadows
-        eventSource={document.body}
-        className="pointer-events-auto"
         camera={{ position: [0, 0, 8], fov: 45 }}
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 2]}
