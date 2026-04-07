@@ -1,4 +1,24 @@
 <<<<<<< HEAD
+
+This is the code for the prototype of the MVE clubs website created by Atakan Turgut. The draft website is live at draft-mve.vercel.app and is deployed using vercel.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
